@@ -6,25 +6,31 @@ public class PlayerActions : MonoBehaviour
 {
     [SerializeField] private Bomb _bomb;
     [SerializeField] private Animator _animator;
-    private bool _canTakeBomb = true;
+    private bool _tookBomb = false;
 
 
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        Debug.Log(Vector2.Distance(transform.position, _bomb.transform.position));
+
         if (Physics.Raycast(ray, out hit))
         {
             if (hit.collider.gameObject.GetComponent<ClickCollider>() && Input.GetMouseButton(0))
             {
-                if (Vector2.Distance(transform.position, _bomb.transform.position) <= 1f && _canTakeBomb)
+                if (Vector2.Distance(transform.position, _bomb.transform.position) <= 1.5f && !_tookBomb)
                 {
-                    _animator.SetBool("Taking", true);
-                    _canTakeBomb = false;   
+                    //_animator.SetBool("Taking", true);
+                    _tookBomb = true;
+                    //_animator.SetBool("Taking", false);
                     _bomb.MoveToPlayer();
                 }
             }
+        }
+
+        if(_tookBomb && Input.GetMouseButton(1))
+        {
+            _bomb.RemoveFromPlayer();
         }
 
     }

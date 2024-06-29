@@ -13,9 +13,9 @@ TagManager:
   - UI
   - PlayerCollider
   - Bomb
-  - 
-  - 
-  - 
+  - Door
+  - Environment
+  - CommonWallCollider
   - 
   - 
   - 
